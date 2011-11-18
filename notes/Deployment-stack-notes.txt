@@ -1,0 +1,68 @@
+Angels Server Recipe
+
+Machine Set up : Ubuntu
+
+Install ssh ::
+	sudo apt-get install openssh-server
+Install vim :: 
+	sudo apt-get install vim
+
+The IP to this new machine is:: ifconfig - 192.168.43.142
+
+
+
+1. Getting Started ( assuming root!)
+-----------------------------
+Basic Configs and Installs
+	$ mkdir -p /home/web
+	$ aptitude install git-core python-dev python-setuptools  postgresql-dev postgresql-client build-essential libpq-dev subversion mercurial
+	$ easy_install virtualenv
+	$ easy_install -U pip
+
+2. Stop and Test Django in virtualenv
+-----------------------------------------
+	$ sudo virtualenv django_test
+	$ sudo pip install -E django_test yolk
+	$ sudo pip install -E django_test Django
+	$ cd django_test
+	$ source bin/activate
+	// Start a Django project to test
+	$ sudo bin/django-admin.py startproject mysite
+	// Start up Django on this Ip
+	$ cd mysite/
+	$ python manage.py runserver 0.0.0.0:8000 
+
+3. Database server: Postgres ( or same on Dev server)
+--------------------------------------------------------
+Install and configure Postgres::
+
+    $ aptitude install git-core postgresql
+    $ cd /etc/postgresql/8.4/main/
+    $ invoke-rc.d postgresql-8.4 stop
+    // make copies of original config files.
+    $ cp postgresql.conf postgresql.conf.orig
+    $ cp pg_hba.conf pg_hba.conf.orig
+    // i used a boiler plate from my git repo and cloned it to a temp folder
+    $ git clone https://happyBtn@github.com/happyBtn/Deployment-Boilerplate.git
+    $ cp /temp/Deployment-Boilerplate/postgresql/postgresql.conf postgresql.conf
+    $ cp /temp/Deployment-Boilerplate/postgresql/pg_hba.conf .
+    // update ips! and save files	
+    $ invoke-rc.d postgresql-8.4 start
+
+And create users and database. Root user for convenience::
+
+    $ sudo -u postgres createuser root
+    // create sample user and db to test
+    $ createuser sampleuser
+    $ createdb -O sampleuser sampleuser
+
+Wire up the app to PostgreSQL, load data, take a look::
+    $source django_sample_app/bin/activate
+    $ pip install -E django_sample_app psycopg2
+    $ cd /home/web/django_sample_app/mysite
+    $ vim settings.py # DATABASE_HOST = '...'
+    $ ./manage.py syncdb
+    $ ./manage.py runserver 0.0.0.0:8000
+
+
+
