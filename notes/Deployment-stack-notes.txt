@@ -70,3 +70,13 @@ Wire up the app to PostgreSQL, load data, take a look::
 Install Apache and mod_wsgi
     $ aptitude install apache2 libapache2-mod-wsgi
     $ mkdir /home/web/static # DocumentRoot
+    $ cd /etc/apache2/
+    // Get rid of all the default Ubuntu Cruft
+    $ rm -rf apache2.conf conf.d/ httpd.conf magic mods-* sites-* ports.conf
+Add our config. Remember to make a python eggs dir (it should be writable by
+apache, but 777 is easier)::
+    $ cp /temp/Deployment-Boilerplate/apache/apache2.conf .
+    // edit this config to serve up our single Django Test app.wsgi (path/to/app/apache/django.wsgi
+    $ vim apache2.conf
+
+ 
