@@ -108,6 +108,29 @@ Edit Apache conf to listen on port 8000::
 
 Verify that Nginx is correctly proxying
    $ curl -I 192.x.x.x 
+
+
+
+Additional::
+----------------
+Installing PHP for NGINX only
+ http://gerardmcgarry.com/blog/how-install-php-fpm-nginx-ubuntu-1004-server
+
+Add the right repositories!
+ $ aptitude install python-software-properties
+ $ add-apt-repository ppa:brianmercer/php
+
+Next, run this command to update your repositories list:
+
+ $ aptitude -y update
+ //Install the required software
+Now that we've got our additional repository ready, time to install the necessary components. Run the following commands - the first two download and install the software, the last one starts the php5-fpm service:
+
+ $ aptitude -y install php5-cli php5-common php5-mysql php5-suhosin php5-gd
+ $ aptitude -y install php5-fpm php5-cgi php-pear php5-memcache php-apc
+ $ service php5-fpm start
+
+
 	
 
 
