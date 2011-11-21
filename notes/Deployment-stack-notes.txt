@@ -15,6 +15,9 @@ The IP to this new machine is:: ifconfig - 192.168.43.142
 -----------------------------
 Basic Configs and Installs
 	$ mkdir -p /home/web
+	$ mkdir -p /home/web/apps
+	$ mkdir -p /home/web/static
+	$ mkdir -p /home/git-staging
 	$ aptitude install git-core python-dev python-setuptools  postgresql-dev postgresql-client build-essential libpq-dev subversion mercurial
 	$ easy_install virtualenv
 	$ easy_install -U pip
