@@ -67,7 +67,7 @@ Wire up the app to PostgreSQL, load data, take a look::
 
 4. Application servers: mod_wsgi, gunicorn
 -----------------------------------------------
-Install Apache and mod_wsgi
+Install Apache and mod_wsgi::
     $ aptitude install apache2 libapache2-mod-wsgi
     $ mkdir /home/web/static # DocumentRoot
     $ cd /etc/apache2/
@@ -76,7 +76,17 @@ Install Apache and mod_wsgi
 Add our config. Remember to make a python eggs dir (it should be writable by
 apache, but 777 is easier)::
     $ cp /temp/Deployment-Boilerplate/apache/apache2.conf .
+    $ mkdir -m777 -p /var/www/.python-eggs
     // edit this config to serve up our single Django Test app.wsgi (path/to/app/apache/django.wsgi
     $ vim apache2.conf
+    //At this point we should have a .wsgi file in our app directory.
+   // we should now be able to see our sample django app. 
+
+Now try it with Gunicorn::
+   $ cd /home/web/
+   $ pip install -E django_sample_app gunicorn
+   $ cd django_sample_app/
+   $ source bin/activate
+   (django_sample_app)root@ubuntu: bin/gunicorn_django -b 0.0.0.0 mysite/settings.py
 
  
