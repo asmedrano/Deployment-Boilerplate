@@ -102,6 +102,9 @@ Edit Apache conf to listen on port 8000::
 
     $ vim /etc/apache2/apache2.conf
     $ invoke-rc.d apache2 restart
+
+Verify that Nginx is correctly proxying
+   $ curl -I 192.x.x.x 
 	
 
 
