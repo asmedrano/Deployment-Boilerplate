@@ -47,8 +47,8 @@ Install and configure Postgres::
     $ cp pg_hba.conf pg_hba.conf.orig
     // i used a boiler plate from my git repo and cloned it to a temp folder
     $ git clone https://happyBtn@github.com/happyBtn/Deployment-Boilerplate.git
-    $ cp /temp/Deployment-Boilerplate/postgresql/postgresql.conf postgresql.conf
-    $ cp /temp/Deployment-Boilerplate/postgresql/pg_hba.conf .
+    $ cp /web/git-staging/Deployment-Boilerplate/postgresql/postgresql.conf postgresql.conf
+    $ cp /web/git-staging/Deployment-Boilerplate/postgresql/pg_hba.conf .
     // update ips! and save files	
     $ invoke-rc.d postgresql-8.4 start
 
@@ -78,7 +78,7 @@ Install Apache and mod_wsgi::
     $ rm -rf apache2.conf conf.d/ httpd.conf magic mods-* sites-* ports.conf
 Add our config. Remember to make a python eggs dir (it should be writable by
 apache, but 777 is easier)::
-    $ cp /temp/Deployment-Boilerplate/apache/apache2.conf .
+    $ cp /web/git-staging/Deployment-Boilerplate/apache/apache2.conf .
     $ mkdir -m777 -p /var/www/.python-eggs
     // edit this config to serve up our single Django Test app.wsgi (path/to/app/apache/django.wsgi
     $ vim apache2.conf
