@@ -89,4 +89,21 @@ Now try it with Gunicorn::
    $ source bin/activate
    (django_sample_app)root@ubuntu: bin/gunicorn_django -b 0.0.0.0 mysite/settings.py
 
+5. Load balancers
+----------------------
+
+Set up NGINX 
+   $ aptitude install nginx 
+   $ cd /etc/nginx/
+   // zap nginx stuff
+   $ rm -rf conf.d/ fastcgi_params koi-* nginx.conf sites-* win-utf
+
+Edit Apache conf to listen on port 8000::
+
+    $ vim /etc/apache2/apache2.conf
+    $ invoke-rc.d apache2 restart
+	
+
+
+
  
