@@ -131,6 +131,9 @@ Now that we've got our additional repository ready, time to install the necessar
  $ service php5-fpm start
 
 
+Installing Supervisor
+ $ pip install -E django_sample_app supervisor
+
 	
 
 
