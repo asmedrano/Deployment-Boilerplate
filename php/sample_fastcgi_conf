@@ -1,0 +1,20 @@
+server {
+
+
+        listen 80;
+        server_name www.sample_site1.com;
+        root /home/web/static/sample_site_one;
+
+        location / {
+                index index.html index.htm;
+        }
+
+        #deal with php
+        location ~ \.php$ {
+                include /etc/nginx/fastcgi.conf;
+                fastcgi_pass 127.0.0.1:9000;
+        }
+
+
+
+}
