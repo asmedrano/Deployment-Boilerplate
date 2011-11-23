@@ -128,12 +128,40 @@ Now that we've got our additional repository ready, time to install the necessar
 
  $ aptitude -y install php5-cli php5-common php5-mysql php5-suhosin php5-gd
  $ aptitude -y install php5-fpm php5-cgi php-pear php5-memcache php-apc
+ // update the config 
+ $ cd /etc/php5/fpm
+---------------------------
+	Edit the following settings. I found that in my default configuration, the pm value was set to static, therefore all the other settings were commented out. So, don't forget to uncomment the settings before changing them!
+	pm = dynamic
+	pm.max_children = 8
+	pm.start_servers = 2
+	pm.min_spare_servers = 2
+	pm.max_spare_servers = 3
+	pm.max_requests = 500
+--------------------
+ $ vim php5-fpm.conf 
  $ service php5-fpm start
 
 
 Installing Supervisor
+-------------------------------------
  $ pip install -E django_sample_app supervisor
+ // you can test whether or not supervisors rebooting gunicorn by killing the gunicorn process
+ $ ps ax|grep gunicorn # get the pid
+ $ kill pid
 
+
+Installing sqlite3
+--------------------------
+ $ apt-get install sqlite3
+ // you can test your installation
+ $ sqlite3 test.db
+ SQLite version 3.0.8
+     Enter ".help" for instructions
+     sqlite> .quit
+ $ sqlite3 test.db  "create table t1 (t1key INTEGER PRIMARY KEY,data TEXT,num double,timeEnter DATE);"
+ $ sqlite3 test.db  "insert into t1 (data,num) values ('This is sample data',3);"
+ $ sqlite3 test.db  "select * from t1 limit 2";
 	
 
 
