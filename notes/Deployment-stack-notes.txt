@@ -145,6 +145,8 @@ Now that we've got our additional repository ready, time to install the necessar
 
 Installing Supervisor
 -------------------------------------
+// supervisor programs get added in /etc/supervisor.d/.conf*
+// supervisor location  /usr/local/bin
  $ pip install -E django_sample_app supervisor
  // you can test whether or not supervisors rebooting gunicorn by killing the gunicorn process
  $ ps ax|grep gunicorn # get the pid
