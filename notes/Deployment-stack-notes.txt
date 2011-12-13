@@ -162,6 +162,68 @@ Installing sqlite3
  $ sqlite3 test.db  "create table t1 (t1key INTEGER PRIMARY KEY,data TEXT,num double,timeEnter DATE);"
  $ sqlite3 test.db  "insert into t1 (data,num) values ('This is sample data',3);"
  $ sqlite3 test.db  "select * from t1 limit 2";
+
+
+
+
+MISC
+------------
+# added the following to ENV/bin/activate
+
+export PYTHONPATH="/home/web/apps/mlt/ENV/mlt"
+export CELERY_LOADER="djcelery.loaders.DjangoLoader"
+
+
+
+example supervisord conf
+
+[program:mlt_gunicorn]
+command=/home/web/apps/mlt/ENV/bin/run /home/web/apps/mlt/ENV/ /home/web/apps/mlt/ENV/bin/gunicorn_django -b 127.0.0.1:8100 --workers=2 /home/web/apps/mlt/ENV/mlt/mlt/settings/prod.py
+user=mlt
+autostart=true
+autorestart=true
+stdout_logfile=/home/web/apps/mlt/logs/supervisord.log
+stderr_logfile=/home/web/apps/mlt/logs/supervisord.log
+redirect_stderr=true
+
+[program:mlt_celery]
+command=/home/web/apps/mlt/ENV/bin/python /home/web/apps/mlt/ENV/mlt/manage.py celeryd --loglevel=INFO
+user=mlt
+numprocs=1
+stdout_logfile=/home/web/apps/mlt/logs/celeryd.log
+stderr_logfile=/home/web/apps/mlt/logs/celeryd.log
+autostart=true
+autorestart=true
+startsecs=10
+evironment=PYTHONPATH="/home/web/apps/mlt/ENV/mlt", CELERY_LOADER="djcelery.loaders.DjangoLoader"
+
+
+; Need to wait for currently executing tasks to finish at shutdown.
+; Increase this if you have very long running tasks.
+stopwaitsecs = 600
+
+
+
+example of a virtual evn run fiel
+
+#!/bin/bash
+VENV=$1
+if [ -z $VENV ]; then
+    echo "usage: runinenv [virtualenv_path] CMDS"
+    exit 1
+fi
+. ${VENV}/bin/activate
+shift 1
+echo "Executing $@ in ${VENV}"
+exec "$@"
+deactivate
+
+
+usage: /path/to/runfile/run /path/to/ENV/ /path/to/ENV/bin/gunicorn_django -b 127.0.0.1:8100 --workers=2
+
+
+
+
 	
 
 
